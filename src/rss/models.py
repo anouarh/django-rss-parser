@@ -8,8 +8,7 @@ class Feed(models.Model):
     def __repr__(self):
         return "<Feed '{}'>".format(self.link)
 
-
-class Item(models.Model):
+""" class Item(models.Model):
     title = models.CharField(max_length=63)
     description = models.TextField()
     link = models.URLField(max_length=255)
@@ -23,4 +22,4 @@ class Item(models.Model):
 
     def __str__(self):
         return f"{self.feed}: {self.title}"
-
+ """
