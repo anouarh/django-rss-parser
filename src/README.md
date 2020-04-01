@@ -1,1 +1,0 @@
-# Rss reader using Django
