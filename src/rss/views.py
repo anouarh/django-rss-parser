@@ -9,27 +9,19 @@ from .serializers import FeedSerializer
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 
+
 class FeedViewSet(ModelViewSet):
     queryset = Feed.objects.all()
     serializer_class = FeedSerializer
-    
-    @action(detail=False, methods=["GET"])
-    def items(self, request):
-        feeds = Feed.objects.all()
-        
+
+    @action(detail=True, methods=["GET"])
+    def items(self, request, pk):
+        feed = Feed.objects.get(pk=pk)
+
         items = []
-        
-        for feed in feeds:
-            rss = feedparser.parse(feed.link)
-            
-            try:
-                items.extend(rss["items"])
-            except KeyError:
-                continue
-        
-        items = list(reversed(sorted(items, key=lambda item: item["published_parsed"])))
-        
+
+        rss = feedparser.parse(feed.link)
+
+        items.extend(rss["items"])
+
         return JsonResponse(items, safe=False)
-        
-    
-    
