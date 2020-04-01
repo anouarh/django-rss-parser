@@ -5,5 +5,4 @@ from .models import Feed
 class FeedSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Feed
-        fields = ("id", "url")
-
+        fields = "__all__"
