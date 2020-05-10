@@ -1,6 +1,8 @@
 from newspaper import Article
 import feedparser
 
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -15,6 +17,7 @@ class NewspaperViewSet(ModelViewSet):
     queryset = Newspaper.objects.all()
     serializer_class = NewspaperSerializer
 
+    @method_decorator(cache_page(60*60))
     @action(detail=True, methods=["GET"])
     def items(self, request, pk):
         feed = Newspaper.objects.get(pk=pk)
