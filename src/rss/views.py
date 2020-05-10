@@ -1,3 +1,4 @@
+from newspaper import Article
 import feedparser
 
 from django.http import JsonResponse
@@ -15,13 +16,27 @@ class NewspaperViewSet(ModelViewSet):
     serializer_class = NewspaperSerializer
 
     @action(detail=True, methods=["GET"])
-    def articles(self, request, pk):
+    def items(self, request, pk):
         feed = Newspaper.objects.get(pk=pk)
-
         items = []
+        url = feed.link
+        feed_title = feed.title
 
-        rss = feedparser.parse(feed.link)
-
-        items.extend(rss["items"])
+        d = feedparser.parse(url)
+        
+        for entry in d.entries:
+            article = Article(entry.link)
+            article.download()
+            article.parse()
+            item = {
+                "feed_title": feed_title,
+                "title": entry.title,
+                "link":  entry.link,
+                "published": entry.published,
+                "image": article.top_image,
+                "text": article.text
+            }
+            items.append(item)
+        
 
         return JsonResponse(items, safe=False)
