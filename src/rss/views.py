@@ -1,5 +1,6 @@
 from newspaper import Article
 import feedparser
+import nltk
 
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
