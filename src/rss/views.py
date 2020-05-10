@@ -3,20 +3,20 @@ import feedparser
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from .models import Feed
-from .serializers import FeedSerializer
+from .models import Newspaper
+from .serializers import NewspaperSerializer
 
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 
 
-class FeedViewSet(ModelViewSet):
-    queryset = Feed.objects.all()
-    serializer_class = FeedSerializer
+class NewspaperViewSet(ModelViewSet):
+    queryset = Newspaper.objects.all()
+    serializer_class = NewspaperSerializer
 
     @action(detail=True, methods=["GET"])
-    def items(self, request, pk):
-        feed = Feed.objects.get(pk=pk)
+    def articles(self, request, pk):
+        feed = Newspaper.objects.get(pk=pk)
 
         items = []
 

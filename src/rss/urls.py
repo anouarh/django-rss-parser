@@ -3,7 +3,7 @@ from rest_framework import routers
 from rss import views
 
 router = routers.DefaultRouter()
-router.register(r'feeds', views.FeedViewSet)
+router.register(r'newspapers', views.NewspaperViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

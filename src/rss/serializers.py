@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Feed
+from .models import Newspaper
 
 
-class FeedSerializer(serializers.HyperlinkedModelSerializer):
+class NewspaperSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Feed
+        model = Newspaper
         fields = "__all__"
